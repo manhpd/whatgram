@@ -1,0 +1,66 @@
+<!-- Static navbar -->
+<header class="text-right">
+<div class="container header" >
+  <div class="logo" >
+
+  </div>
+  <form class="text-left search" action="/search" method="GET">
+    <input name="q" type="text" placeholder="Search..">
+    <button class="btn btn-success" (click)="search()">Search</button>
+  </form>
+  <div class="menu-icon">
+      <div class="dropdown">
+          <span class="dropdown-toggle" role="button" id="dropdownSettings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            
+          </span>
+          <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownSettings">
+              <li>
+                  <a href="settings" (click)="redirectToSetting()" title="Settings" >
+                      <div class="col-xs-4">
+                          <i class="fa fa-wrench" aria-hidden="true"></i>
+                      </div>
+                     <div class="col-xs-8 text-left">
+                          <span>Settings</span>
+                      </div>
+                  </a>
+              </li>
+              
+              <li>
+                  <a href="#" title="Settings">
+                      <div class="col-xs-4">
+                          <i class="fa fa-sign-out" aria-hidden="true"></i>
+                      </div>
+                      <div class="col-xs-8 text-left">
+                          <span>Logout</span>
+                      </div>
+                  </a>
+              </li>
+          </ul>
+      </div>
+  </div>
+  <div class="second-icon dropdown menu-icon">
+      <span class="dropdown-toggle" role="button" id="dropdownNotification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <span class="hidden-xs hidden-sm"></span> <i class="fa fa-bell-o" aria-hidden="true"></i> <span class="badge">1</span>
+      </span>
+      <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownNotification">
+          <li class="new-not">
+              <a href="#" title="User name like"><img src="img/ductra.jpg" alt="User name" class="img-circle img-user-mini"> User likes your post</a>
+          </li>
+          <li>
+              <a href="#" title="User name like"><img src="img/ductra.jpg" alt="User name" class="img-circle img-user-mini"> User likes your post</a>
+          </li>
+          <li role="separator" class="divider"></li>
+          <li><a href="#" title="All notifications">All Notifications</a></li>
+      </ul>
+  </div>
+  <div class="second-icon menu-icon">
+ 
+      <span><a href="profile" (click)="redirectToProfile()" title="Profile"><span class="hidden-xs hidden-sm"></span> <i class="fa fa-user" aria-hidden="true"></i></a>
+      </span>
+  </div>
+  <div class="second-icon menu-icon">
+      <span><a href="dashboard" (click)="refresh()" title="Wall"><span class="hidden-xs hidden-sm"></span> <i class="fa fa-database" aria-hidden="true"></i></a>
+      </span>
+  </div>
+  </div>
+</header>

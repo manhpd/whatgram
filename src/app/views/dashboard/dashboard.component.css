@@ -1,0 +1,25 @@
+.search {
+    width: 300px;
+}
+
+.jumbotron {
+    padding-top: var(--jumbotron-padding-y);
+    padding-bottom: var(--jumbotron-padding-y);
+    margin-bottom: 0;
+    background-color: white;
+  }
+
+  .header {
+    padding: 10px;
+  }
+
+  .card {
+
+    margin : 30px;
+  }
+  .wall {
+    margin-top: 50px;
+  }
+  .upload {
+    margin-top: 110px;
+  }

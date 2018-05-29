@@ -1,0 +1,18 @@
+.btn-blue {
+    background: blue;
+    color: white;
+}
+
+.btn-red {
+    background: red;
+    color: white;
+}
+
+.background {
+    height: 100 px;
+}
+
+.login-card {
+    padding-top: 200px;
+    padding: 100px;
+}
