@@ -8,7 +8,7 @@ import 'rxjs/Rx';
 import { NgProgressHttpClientModule } from '@ngx-progressbar/http-client';
 import { UploadFileService } from '../../services/upload-file.service';
 import { GetUserPhoto } from '../../services/get-user-photo.service';
-import { FileUpload } from '../../model/file-upload';
+import { Fileupload } from '../../model/fileupload';
 import { User } from '../../model/user';
 import { UserService } from '../../services/user.service';
 
@@ -30,6 +30,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+import { Router } from '@angular/router';
+import { Rekognition } from 'aws-sdk';
+import { Label } from 'aws-sdk/clients/cloudhsm';
+import { Labels } from 'aws-sdk/clients/rekognition';
+import { Globals } from '../../golbals.component';
 const API_URL = environment.photoApiUrl;
 
 @Component({
@@ -39,7 +44,9 @@ const API_URL = environment.photoApiUrl;
 })
 
 export class NewPostComponent implements OnInit {
-  
+  public form: FormGroup = new FormGroup({
+    'description': new FormControl( )
+  });
   public progressPercentage = 0;
   
   FOLDER = '';
@@ -48,8 +55,8 @@ export class NewPostComponent implements OnInit {
   private getS3Bucket(): any {
     const bucket = new S3(
       {
-        accessKeyId: 'AKIAICDELORXYJAPZJ5A',
-        secretAccessKey: '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',
+        accessKeyId: 'AKIAJ5JKXVT3Q2TIG6NQ',
+        secretAccessKey: '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',
         region: 'us-east-2'
       }
     );
@@ -63,17 +70,21 @@ export class NewPostComponent implements OnInit {
   private image: any;
   public postProgress = 'pending';
   public uploadPercent: number;
-  public form: FormGroup = new FormGroup({
-    'title': new FormControl(null)
-  });
+  public rekognitionData: Labels;
+  data : Observable<any>;
+
+  
+
 
   
   selectedFiles: FileList;
-  fileUploads: Observable<Array<FileUpload>>;
+  fileUploads: Observable<Array<Fileupload>>;
   users: Observable<User[]>;
   user: Observable<User>;
-  photo: Observable<FileUpload>;
-  constructor( private progress: Progress, private uploadService: UploadFileService, private dashboard : DashboardComponent) {
+  loadedPhoto: Fileupload;
+  photo: Observable<Fileupload>;
+  constructor( private progress: Progress, private uploadService: UploadFileService, private router: Router
+    , private dashboard : DashboardComponent, private globals : Globals) {
 
   }
 
@@ -83,35 +94,34 @@ export class NewPostComponent implements OnInit {
     });
   }
 
-  upload() { 
+  async upload() { 
+    this.postProgress = "doing";
     const file = this.selectedFiles.item(0);
-    const params = {
-      Bucket: 'serverlessimageresize-imagebucket-asjv83zdnqub',
-      Key: this.FOLDER + file.name,
-      Body: file,
-      ACL: 'public-read'
-    };
-    this.postProgress = 'doing';
-    const postProgress = this.getS3Bucket().upload(params).on('httpUploadProgress', function(progress) {
-      this.postProgress = 'doing';
-      console.log(progress.loaded + " of " + progress.total + " bytes");
-      this.progressPercentage = Math.round((progress.loaded * 100.0) / progress.total);
-  }).send(function(err, data) {
-      console.log("FINISHED");
-      if (err) {
-          console.log(err.message);
-          return false;
-      } else {
-       
-      }
-  });
-  this.postProgress = 'concluded';
-    var photo = new FileUpload(file.name,"manhpd",environment.cropApiUrl + file.name, "sample description");
-    this.uploadService.uploadPhotoDB(photo);
-    
+    await this.uploadService.uploadfile(file);
    
+    this.loadedPhoto = new Fileupload("",file.name,this.globals.user.userName,environment.cropApiUrl + file.name,
+       "sample description",this.globals.user.id);
+    this.uploadService.getRekognitionData(file.name) .on('success', response => {
+      console.log(response.data);
+
+      this.rekognitionData = (<Rekognition.DetectLabelsResponse>response.data).Labels;
+    }).on('error', err => {
+      console.log('Error with Rekognition');
+    });;
+    
+     
+    this.photo = Observable.of(this.loadedPhoto);
+    this.postProgress = 'concluded';
   }
-  
+
+  async savePhotoDb() {
+    this.loadedPhoto.description = this.form.value.description;
+    console.log(this.loadedPhoto);
+    await this.uploadService.uploadPhotoDB(this.loadedPhoto);
+    this.postProgress = "pending";
+    this.dashboard.ngOnInit();
+  }
+ 
 
   selectFile(event) {
     this.selectedFiles = event.target.files;
@@ -119,7 +129,14 @@ export class NewPostComponent implements OnInit {
 
   public publish(): void {
     
-   
+  }
+  refresh() {
+    this.dashboard.ngOnInit();
+  }
+
+  loadHashTag() {
+  
+    console.log(this.uploadService.rekognigionLabels);
   }
 
   public prepareImageUpload(event: Event): void {

@@ -13,7 +13,11 @@ export const environment = {
     storageBucket: "newproject-5f2ad.appspot.com",
     messagingSenderId: "476763161737"
   },
-  userApiUrl: 'https://6f0kxii2n0.execute-api.us-east-2.amazonaws.com/dev',
-  photoApiUrl: 'https://f2t6u6vu82.execute-api.us-east-2.amazonaws.com/dev',
-  cropApiUrl: 'http://serverlessimageresize-imagebucket-asjv83zdnqub.s3-website.us-east-2.amazonaws.com/300x300/'
+  userApiUrl: 'user_api',
+  photoApiUrl: 'photo_api',
+  cropApiUrl: 'crop_photo_api',
+  searchApiUrl: 'search_api',
+  followApiUrl: 'follow_api',
+  followApiUrl2: 'follow_api_2',
+  photoApiUrl2: 'Photo_api_2'
 };

@@ -1,4 +1,4 @@
-export class FileUpload {
+export class Customer {
     uploadedUser: string;
     url: string;
     description: string;

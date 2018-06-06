@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FileUpload } from '../../model/file-upload';
+import { Fileupload } from '../../model/fileupload';
 
 @Component({
   selector: 'app-details-upload',
@@ -8,7 +8,7 @@ import { FileUpload } from '../../model/file-upload';
 })
 export class DetailsUploadComponent implements OnInit {
 
-  @Input() fileUpload: FileUpload;
+  @Input() fileUpload: Fileupload;
 
   constructor() { }
 

@@ -1,7 +1,15 @@
 export class User {
-    public name: string;
+    id: string;
+    email: string;
+    displayName: string;
+    photoURL: string;
+    userName: string;
 
-    constructor(name: string) {
-        this.name = name;
+    constructor(id: string,  email: string,  displayName: string,  photoURL : string, userName : string) {
+        this.id = id;
+        this.email = email;
+        this.displayName = displayName;
+        this.photoURL = photoURL;
+        this.userName = userName;
     }
 }

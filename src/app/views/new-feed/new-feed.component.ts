@@ -5,7 +5,7 @@ import { UploadFileService } from '../../services/upload-file.service';
 import { GetUserPhoto } from '../../services/get-user-photo.service';
 
 import { Observable } from 'rxjs/Observable';
-import { FileUpload } from '../../model/file-upload';
+import { Fileupload } from '../../model/fileupload';
 import { User } from '../../model/user';
 import { UserService } from '../../services/user.service';
 
@@ -22,10 +22,10 @@ import { environment } from 'environments/environment.prod';
 export class NewFeedComponent implements OnInit  {
 
   selectedFiles: FileList;
-  fileUploads: Observable<Array<FileUpload>>;
+  fileUploads: Observable<Array<Fileupload>>;
   users: Observable<User[]>;
   user: Observable<User>;
-  photo: Observable<FileUpload>;
+  photo: Observable<Fileupload>;
 
   constructor(public authService: AuthService, private uploadService: UploadFileService, 
     private userService: UserService, private http: Http, route: ActivatedRoute) {

@@ -1,66 +1,61 @@
 <!-- Static navbar -->
-<header class="text-right">
-<div class="container header" >
-  <div class="logo" >
 
-  </div>
-  <form class="text-left search" action="/search" method="GET">
-    <input name="q" type="text" placeholder="Search..">
-    <button class="btn btn-success" (click)="search()">Search</button>
-  </form>
-  <div class="menu-icon">
-      <div class="dropdown">
-          <span class="dropdown-toggle" role="button" id="dropdownSettings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            
-          </span>
-          <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownSettings">
-              <li>
-                  <a href="settings" (click)="redirectToSetting()" title="Settings" >
-                      <div class="col-xs-4">
-                          <i class="fa fa-wrench" aria-hidden="true"></i>
-                      </div>
-                     <div class="col-xs-8 text-left">
-                          <span>Settings</span>
-                      </div>
-                  </a>
-              </li>
-              
-              <li>
-                  <a href="#" title="Settings">
-                      <div class="col-xs-4">
-                          <i class="fa fa-sign-out" aria-hidden="true"></i>
-                      </div>
-                      <div class="col-xs-8 text-left">
-                          <span>Logout</span>
-                      </div>
-                  </a>
-              </li>
-          </ul>
-      </div>
-  </div>
-  <div class="second-icon dropdown menu-icon">
-      <span class="dropdown-toggle" role="button" id="dropdownNotification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      <span class="hidden-xs hidden-sm"></span> <i class="fa fa-bell-o" aria-hidden="true"></i> <span class="badge">1</span>
-      </span>
-      <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownNotification">
-          <li class="new-not">
-              <a href="#" title="User name like"><img src="img/ductra.jpg" alt="User name" class="img-circle img-user-mini"> User likes your post</a>
-          </li>
-          <li>
-              <a href="#" title="User name like"><img src="img/ductra.jpg" alt="User name" class="img-circle img-user-mini"> User likes your post</a>
-          </li>
-          <li role="separator" class="divider"></li>
-          <li><a href="#" title="All notifications">All Notifications</a></li>
-      </ul>
-  </div>
-  <div class="second-icon menu-icon">
- 
-      <span><a href="profile" (click)="redirectToProfile()" title="Profile"><span class="hidden-xs hidden-sm"></span> <i class="fa fa-user" aria-hidden="true"></i></a>
-      </span>
-  </div>
-  <div class="second-icon menu-icon">
-      <span><a href="dashboard" (click)="refresh()" title="Wall"><span class="hidden-xs hidden-sm"></span> <i class="fa fa-database" aria-hidden="true"></i></a>
-      </span>
-  </div>
-  </div>
-</header>
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+      <h5 class="my-0 mr-md-auto font-weight-normal">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block mx-auto"><circle cx="12" cy="12" r="10"></circle><line x1="14.31" y1="8" x2="20.05" y2="17.94"></line><line x1="9.69" y1="8" x2="21.17" y2="8"></line><line x1="7.38" y1="12" x2="13.12" y2="2.06"></line><line x1="9.69" y1="16" x2="3.95" y2="6.06"></line><line x1="14.31" y1="16" x2="2.83" y2="16"></line><line x1="16.62" y1="12" x2="10.88" y2="21.94"></line></svg>
+        Whatgram
+      </h5>
+      <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark" href="dashboard" (click)="refresh()" >Wall</a>
+        <a class="p-2 text-dark" href="profile" (click)="redirectToProfile()" >Profile</a>
+        <a class="p-2 text-dark" href="login" (click)="logout()">Logout</a>
+        
+      </nav>
+      <form class="text-left search" [formGroup]="form" (ngSubmit)="search()" >
+            <input name="q" type="text" placeholder="Search.." formControlName="search" >
+            <button class="btn btn-success" type="submit" data-toggle="modal" data-target="#searchModal" >Search</button>
+        </form>
+    </div>
+    
+
+
+<div class="modal" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  >
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Search Friend</h5>
+                        <button type="button" class="close" data-dismiss="modal"  aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <ngx-loading-bar ></ngx-loading-bar>
+            </div>
+            <div class="modal-body">
+                <div class="card box-shadow" *ngFor="let user of searchUsers | async ">
+        
+                    <div class=" pt-3">
+                        <img data-src="{{user.photoURL}}" alt="32x32" class="mr-2 rounded" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2232%22%20height%3D%2232%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_163ac2802ed%20text%20%7B%20fill%3A%23007bff%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A2pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_163ac2802ed%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20fill%3D%22%23007bff%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2212.296875%22%20y%3D%2216.9%22%3E32x32%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true" style="width: 32px; height: 32px;">
+                        <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                            <div class="d-flex justify-content-between align-items-center w-100">
+                                <strong class="text-gray-dark">{{user.displayName}}</strong>
+                                <div *ngIf="includes(user.id); then unfollowButton else followButton ">
+                                     button renders here
+                                </div>
+                                    <ng-template #followButton>
+                                        <button class="button is-info" (click)="toggleFollow(user.id)">Follow</button>
+                                    </ng-template>
+
+                                    <ng-template #unfollowButton>
+                                        <button class="button is-warning" (click)="toggleUnFollow(user.id)">Unfollow</button>
+                                </ng-template>
+                            </div>
+                            <span class="d-block">@{{user.userName}}</span>
+                        </div>
+                    </div>
+        
+            </div>
+            </div>
+        </div>
+    
+    </div>
+</div>

@@ -13,7 +13,9 @@ import { ProfileComponent } from './views/profile/profile.component';
 import { SearchFriendComponent } from './views/search-friend/search-friend.component';
 import { HeaderComponent } from './views/header/header.component';
 import { NewFeedComponent } from './views/new-feed/new-feed.component';
-
+import { RegisterComponent } from './views/register/register.component';
+import { FollowService } from './services/follow.service';
+ 
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { environment } from '../environments/environment';
@@ -32,7 +34,12 @@ import { SettingsComponent } from './views/settings/settings.component';
 import { NewPostComponent } from './views/new-post/new-post.component';
 import { NgProgressHttpClientModule } from '@ngx-progressbar/http-client';
 import { Progress } from './services/progress.service';
+import { Globals } from './golbals.component';
 
+import { LoadingBarHttpModule } from '@ngx-loading-bar/http';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
+import { UserPorfileComponent } from './views/userProfile/userProfile.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +52,9 @@ import { Progress } from './services/progress.service';
     SettingsComponent,
     NewPostComponent,
     NewFeedComponent,
-    SearchFriendComponent
+    SearchFriendComponent,
+    RegisterComponent,
+    UserPorfileComponent
   ],
   imports: [
     BrowserModule,
@@ -57,9 +66,13 @@ import { Progress } from './services/progress.service';
     HttpModule,
     ReactiveFormsModule,
     FormsModule,
-    NgProgressHttpClientModule
+    NgProgressHttpClientModule,
+    LoadingBarHttpClientModule,
+    LoadingBarHttpModule,
+    LoadingBarRouterModule
   ],
-  providers: [AuthService, AuthGuardService, UploadFileService, GetUserPhoto, UserService,Progress],
+  providers: [AuthService, AuthGuardService, UploadFileService, GetUserPhoto, 
+    UserService,Progress, DashboardComponent, SearchFriendComponent, FollowService, Globals],
   bootstrap: [AppComponent]
 })
 
